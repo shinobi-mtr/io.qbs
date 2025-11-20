@@ -5,7 +5,7 @@ Qbs: قَبَسَ • (qabasa) I (non-past يَقْبِسُ (yaqbisu), verbal no
 
 ## Idea
 
-An implementation some of golang `io` functionalities but for clang.
+An implementation for some of golang `io` functionalities but for clang.
 
 ## Features
 
