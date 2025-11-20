@@ -18,11 +18,9 @@ typedef struct {
   uint64_t n;
 } qbs_io_respose_t;
 
-typedef qbs_io_respose_t (*qbs_io_read)(void *ctx, uint8_t *bytes,
-                                        uint64_t size);
+typedef qbs_io_respose_t (*qbs_io_read)(void *ctx, uint8_t *bytes, uint64_t size);
 
-typedef qbs_io_respose_t (*qbs_io_write)(void *ctx, uint8_t *bytes,
-                                         uint64_t size);
+typedef qbs_io_respose_t (*qbs_io_write)(void *ctx, uint8_t *bytes, uint64_t size);
 
 typedef struct {
   void *ctx;
@@ -52,8 +50,7 @@ const uint8_t *qbs_io_error_to_string(int16_t code) {
   return (uint8_t *)"unreachable";
 }
 
-qbs_io_respose_t qbs_io_copy_buffer(qbs_io_t *src, qbs_io_t *dst, uint8_t *buf,
-                                    uint64_t sz) {
+qbs_io_respose_t qbs_io_copy_buffer(qbs_io_t *src, qbs_io_t *dst, uint8_t *buf, uint64_t sz) {
   assert(src != 0);
   assert(dst != 0);
   assert(sz != 0);
@@ -142,8 +139,7 @@ qbs_io_respose_t qbs_io_copy_n(qbs_io_t *src, qbs_io_t *dst, uint64_t n) {
   return qbs_io_copy(&lsrc, dst);
 }
 
-qbs_io_respose_t qbs_io_read_at_least(qbs_io_t *r, uint8_t *b, uint64_t sz,
-                                      uint64_t min) {
+qbs_io_respose_t qbs_io_read_at_least(qbs_io_t *r, uint8_t *b, uint64_t sz, uint64_t min) {
   assert(r != 0);
   assert(b != 0);
   assert(sz != 0);
@@ -166,6 +162,4 @@ qbs_io_respose_t qbs_io_read_at_least(qbs_io_t *r, uint8_t *b, uint64_t sz,
   return rn;
 }
 
-qbs_io_respose_t qbs_io_read_full(qbs_io_t *r, uint8_t *b, uint64_t sz) {
-  return qbs_io_read_at_least(r, b, sz, sz);
-}
+qbs_io_respose_t qbs_io_read_full(qbs_io_t *r, uint8_t *b, uint64_t sz) { return qbs_io_read_at_least(r, b, sz, sz); }
