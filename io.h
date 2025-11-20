@@ -3,6 +3,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#define qbs_io_min(a, b) (((a) < (b)) ? (a) : (b))
+
 typedef enum {
   qbs_io_err_eof = -1,
   qbs_io_err_null = 0,
@@ -18,6 +20,7 @@ typedef struct {
 
 typedef qbs_io_respose_t (*qbs_io_read)(void *ctx, uint8_t *bytes,
                                         uint64_t size);
+
 typedef qbs_io_respose_t (*qbs_io_write)(void *ctx, uint8_t *bytes,
                                          uint64_t size);
 
@@ -33,7 +36,6 @@ typedef struct {
   qbs_io_t *r;
   bool is_completed;
 } qbs_io_limit_t;
-#define qbs_io_min(a, b) (((a) < (b)) ? (a) : (b))
 
 const uint8_t *qbs_io_error_to_string(int16_t code) {
   switch (code) {
