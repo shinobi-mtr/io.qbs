@@ -77,11 +77,9 @@ void test_copy_n() {
   qbs_io_t r = {
       .ctx = &rtx,
       .read = bytes_read,
-      .write = 0,
   };
   qbs_io_t w = {
       .ctx = &wtx,
-      .read = 0,
       .write = bytes_write,
   };
 
@@ -114,11 +112,9 @@ void test_copy() {
   qbs_io_t r = {
       .ctx = &rtx,
       .read = bytes_read,
-      .write = 0,
   };
   qbs_io_t w = {
       .ctx = &wtx,
-      .read = 0,
       .write = bytes_write,
   };
 
@@ -142,7 +138,6 @@ void test_read_full() {
   qbs_io_t r = {
       .ctx = &rtx,
       .read = bytes_read,
-      .write = 0,
   };
 
   qbs_io_respose_t rio = qbs_io_read_full(&r, out, sizeof(out));

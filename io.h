@@ -22,10 +22,13 @@ typedef qbs_io_respose_t (*qbs_io_read)(void *ctx, uint8_t *bytes, uint64_t size
 
 typedef qbs_io_respose_t (*qbs_io_write)(void *ctx, uint8_t *bytes, uint64_t size);
 
+typedef uint16_t (*qbs_io_close)(void *ctx);
+
 typedef struct {
   void *ctx;
   qbs_io_read read;
   qbs_io_write write;
+  qbs_io_close close;
 } qbs_io_t;
 
 typedef struct {
