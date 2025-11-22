@@ -1,5 +1,6 @@
 #pragma once
 #include <assert.h>
+#include <cstdint>
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -11,10 +12,11 @@ typedef enum {
   qbs_io_err_unexpected_eof = 1,
   qbs_io_err_no_progress = 2,
   qbs_io_err_short_buffer = 3,
+  qbs_io_err_long_buffer = 4,
 } qbs_io_err;
 
 typedef struct {
-  int16_t err;
+  int64_t err;
   uint64_t n;
 } qbs_io_respose_t;
 
@@ -69,6 +71,12 @@ qbs_io_respose_t qbs_io_copy_buffer(qbs_io_t *src, qbs_io_t *dst, uint8_t *buf, 
     wn = dst->write(dst->ctx, buf, rn.n);
     if (wn.err != qbs_io_err_null)
       return wn;
+    if (ttl == UINT64_MAX)
+      return (qbs_io_respose_t){
+          .err = qbs_io_err_long_buffer,
+          .n = ttl,
+      };
+
     ttl += wn.n;
   }
   return (qbs_io_respose_t){
@@ -113,8 +121,13 @@ qbs_io_respose_t qbs_io_limit_read(void *ctx, uint8_t *buf, uint64_t sz) {
         .err = qbs_io_err_unexpected_eof,
         .n = rn.n,
     };
-  if (rn.err == qbs_io_err_null)
+  if (rn.err == qbs_io_err_null) {
+    if (ltx->done == UINT64_MAX)
+      return (qbs_io_respose_t){
+          .err = qbs_io_err_long_buffer,
+      };
     ltx->done += rn.n;
+  }
   return rn;
 }
 
@@ -133,6 +146,7 @@ qbs_io_t qbs_io_add_limit(qbs_io_limit_t *l, qbs_io_t *r, uint64_t limit) {
       .ctx = l,
       .read = qbs_io_limit_read,
       .write = 0,
+      .close = 0,
   };
 }
 
