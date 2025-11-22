@@ -1,6 +1,6 @@
 #pragma once
+
 #include <assert.h>
-#include <cstdint>
 #include <stdbool.h>
 #include <stdint.h>
 
